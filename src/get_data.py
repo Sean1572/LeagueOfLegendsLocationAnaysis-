@@ -1,3 +1,4 @@
+from riotwatcher import LolWatcher, ApiError
 ## Pulls out the data we care about from here!
 
 def get_players_part_id(parts, puuid):
@@ -6,24 +7,54 @@ def get_players_part_id(parts, puuid):
 def get_particpants_puuid(parts, part_id):
     return {x["participantId"]: x["puuid"] for x in parts}[part_id]
 
-def select_player_locations(match_id, match_type,  timeline, data = []):
+def select_player_locations(match_meta,  timeline, data = [], lol_watcher=LolWatcher, region="na1"):
     frames = timeline["info"]["frames"]
     parts = timeline["info"]["participants"]
+    match_type = match_meta["info"]["gameMode"]
+    match_id = match_meta["metadata"]["matchId"]
+
+    # Trying to not redo these every frame to save on api limits!
+    tiers, ranks = [], []
+    for player in range(1, 11):
+        summoner_id = match_meta["info"]["participants"][player-1]["summonerId"]
+        rank_meta = lol_watcher.league.by_summoner(region, summoner_id)[0]
+        tiers.append(rank_meta["tier"])
+        ranks.append(rank_meta["rank"])
+
 
     for frame_idx, frame in enumerate(frames):
         for player in frame["participantFrames"].keys():
             player_meta = frame["participantFrames"][player]
+            player = int(player)
+            player_list = int(player) - 1
             pos = player_meta["position"]
             level = player_meta["level"]
+            puuid = get_particpants_puuid(parts, player)
+            team_id = match_meta["info"]["participants"][player_list]["teamId"]
+            win = match_meta["info"]["participants"][player_list]["win"]
+            team_pos  = match_meta["info"]["participants"][player_list]["teamPosition"]
+            indiv_pos = match_meta["info"]["participants"][player_list]["individualPosition"]
+            lane = match_meta["info"]["participants"][player_list]["lane"]
+            tier = tiers[player_list]
+            rank = ranks[player_list]
+
             data.append({
                 "match_ids": match_id,
                 "match_type": match_type,
                 "frame": frame_idx,
                 "player_part_id": player,
-                "player_puuid": get_particpants_puuid(parts, int(player)),
+                "player_puuid": puuid,
+                "player_summoner_id": summoner_id,
                 "x": pos["x"],
                 "y": pos["y"],
+                "team_id": team_id,
+                "win": win,
+                "position": team_pos,
+                "indiv_pos": indiv_pos,
+                "lane": lane,
                 "level": level,
+                "tier": tier,
+                "rank": rank
             })
         
     return data
