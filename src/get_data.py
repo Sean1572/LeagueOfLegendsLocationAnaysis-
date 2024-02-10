@@ -15,11 +15,19 @@ def select_player_locations(match_meta,  timeline, data = [], lol_watcher=LolWat
 
     # Trying to not redo these every frame to save on api limits!
     tiers, ranks = [], []
+    #print(len(match_meta["info"]["participants"]))
     for player in range(1, 11):
         summoner_id = match_meta["info"]["participants"][player-1]["summonerId"]
-        rank_meta = lol_watcher.league.by_summoner(region, summoner_id)[0]
-        tiers.append(rank_meta["tier"])
-        ranks.append(rank_meta["rank"])
+        summoner_meta = lol_watcher.league.by_summoner(region, summoner_id)
+        if len(summoner_meta) > 0:
+            rank_meta = summoner_meta[0]
+            tiers.append(rank_meta["tier"])
+            ranks.append(rank_meta["rank"])
+        else:
+            tiers.append("UNKN")
+            ranks.append("UNKN")
+    #print(tiers)
+    #print(ranks)
 
 
     for frame_idx, frame in enumerate(frames):
