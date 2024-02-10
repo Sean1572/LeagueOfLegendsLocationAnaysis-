@@ -1,6 +1,9 @@
 <script>
 	import * as d3 from 'd3';
     export let data = [];
+
+    //going largely based on https://d3-graph-gallery.com/graph/heatmap_basic.html
+    
 </script>
 
 <div class="visualization">
