@@ -15,7 +15,7 @@
     // };
 
     onMount(async () => {
-        await d3.csv("test1.csv", function(row) {
+        await d3.csv("test19.csv", function(row) {
             data.push({
                 "x": row['x'],
                 "y": row['y']

@@ -41,7 +41,7 @@
     // Prepare a color palette
     $: color = d3.scaleLinear()
       .domain([0, 1]) // Points per square pixel.
-      .range(["white", "#69b3a2"])
+      .range(["rgba(255, 255, 255, 0.5)", "rgba(105, 179, 162, 0.5)"])
     
  
 
@@ -50,7 +50,7 @@
             .x(function(d) { return x(d.x); })
             .y(function(d) { return y(d.y); })
             .size([width, height])
-            .bandwidth(2)
+            .bandwidth(3)
             (data)
 
     $: console.log(densityData)
