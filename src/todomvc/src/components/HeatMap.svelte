@@ -4,10 +4,10 @@
     
     export let data = [];
     const width = 800;
-    const height = 800;
-    const marginTop = 20;
+    const height = width;
+    const marginTop = 40;
     const marginRight = 40;
-    const marginBottom = 20;
+    const marginBottom = 40;
     const marginLeft = 40;
     const mapSize = 16000
 
@@ -65,12 +65,12 @@
     {height}
     viewBox="0 0 {width} {height}"
     style="max-width: 100%; height: auto;">
-        <g  transform="translate({marginLeft},{marginTop})">\
+        <g  transform="translate({0},{marginBottom})">\
             <!-- https://leagueoflegends.fandom.com/wiki/Summoner%27s_Rift_(League_of_Legends)?file=Summoner%27s_Rift_Minimap.png -->
             <image 
-            href="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/bltfc54dc5ad1b611eb/655d01c54c0b9a7dccd52636/updated_brush_and_wall_concepts.png" 
-            height={height}
-            width={width - marginLeft - marginRight}
+            href="summoners_rift.png" 
+                height={height - marginBottom * 2}
+                width={width}
 
              />
         </g>

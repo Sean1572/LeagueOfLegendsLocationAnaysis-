@@ -5,6 +5,15 @@
     
     let data = [];
 
+    // //Frame / Win / Loss
+    // let data = {
+
+    //     0: {
+    //         window
+    //     },
+    //     1: []
+    // };
+
     onMount(async () => {
         await d3.csv("test1.csv", function(row) {
             data.push({
