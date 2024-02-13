@@ -7,7 +7,8 @@
     let currentFrame = 0; 
 
     onMount(async () => {
-        allData = await d3.csv("2_07_2024_league_crawl_data.csv");
+        allData = await d3.csv("https://raw.githubusercontent.com/Sean1572/league_data/main/2_09_2024_league_crawl_data_annon.csv");
+        console.log("hello", allData)
         updateData(currentFrame);
     });
 
