@@ -15,13 +15,13 @@ jobs:
       - name: DEBUG Where are we
         run: ls
       - name: DEBUG Where are we
-        run: pdw
+        run: pwd
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: npm
-          cache-dependency-path: '/src/todomvc'
+          cache-dependency-path: 'src/todomvc/package-lock.json'
 
       - name: Install dependencies
         run: npm install
