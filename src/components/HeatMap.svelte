@@ -18,7 +18,7 @@
 
     //going largely based on https://d3-graph-gallery.com/graph/density2d_shading.html
     // and https://github.com/dsc-courses/dsc106-wi24/blob/main/d3-lecture/src/components/Temperature03Axes.svelte
-    $: console.log(data[0]);
+    $: data, console.log("heatmap update", data);
 
     $: x = d3.scaleLinear()
         .domain([0, mapSize])
