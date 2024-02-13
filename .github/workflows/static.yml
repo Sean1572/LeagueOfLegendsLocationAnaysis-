@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: DEBUG Where are we
+        run: ls
+      - name: DEBUG Where are we
+        run: pdw
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
