@@ -3,6 +3,7 @@ name: Deploy static content to Pages
 
 on:
   # Runs on pushes targeting the default branch
+  pull_request:
   push:
     branches: ["main"]
 
@@ -37,7 +38,9 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: '.'
+          path: './src/todomvc'
+      - name: run installation
+        uses: npm install
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
