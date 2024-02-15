@@ -3,7 +3,7 @@
 	import * as d3 from 'd3';
     
     export let data = [];
-    const width = 800;
+    const width = 650;
     const height = width;
     const marginTop = 40;
     const marginRight = 40;

@@ -130,7 +130,7 @@
     }
 
     function myFunction(event) {
-        let option = event.originalTarget
+        let option = event.target
         filters[option.id] = option.checked
         console.log("testing", filters, event)
     }
@@ -144,21 +144,157 @@
 
 <main>
     <h1>Dynamic Heatmap Visualization</h1>
-    <input type="range" min="1" max="60" bind:value={currentFrame} />
+    <div class="slider-container">
+        <input type="range" min="1" max="60" bind:value={currentFrame}>
+    </div>
     <p>Current Frame: {currentFrame}</p>
 
     <form >
-        <input type="checkbox" id="tier" name="tier" value="tier" on:change={(event) => myFunction(event)}>
-        <label for="tier"> tier</label><br>
-        <input type="checkbox" id="team_id" name="team_id" value="team_id" on:change={(event) => myFunction(event)}>
-        <label for="team_id"> team</label><br>
-        <input type="checkbox" id="win" name="win" value="win" on:change={(event) => myFunction(event)}>
-        <label for="win"> win</label><br>
-        
+        <div class="checkbox">
+            <input type="checkbox" id="tier" name="tier" value="tier" on:change={(event) => myFunction(event)}>
+            <label for="tier"> Tier</label><br>
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" id="team_id" name="team_id" value="team_id" on:change={(event) => myFunction(event)}>
+            <label for="team_id"> Team</label><br>
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" id="win" name="win" value="win" on:change={(event) => myFunction(event)}>
+            <label for="win"> Win</label><br>
+        </div>
     </form>
     
-
-    {#each data_to_display as data}
-        <HeatMap bind:data={data} />
-    {/each}
+    <div class='heatmap-container'>
+        {#each data_to_display as data}
+            <HeatMap bind:data={data} />
+        {/each}
+    </div>
 </main>
+
+<style>
+    /* title */
+    main h1 {
+      font-size: 2.5em; 
+      font-weight: bold; 
+      color: #8400ff;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25); 
+      font-family: 'Arial Black', Gadget, sans-serif; 
+      text-align: center; 
+      margin-top: 20px; 
+      margin-bottom: 20px; 
+    }
+  
+  
+    /* current frame */
+    p {
+      text-align: center; 
+      font-size: 20px; 
+      font-family: 'Arial', Gadget, sans-serif; 
+    }
+
+    /* heatmap */
+    .heatmap-container {
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        flex-direction: column; 
+    }
+
+    /* slider*/
+    .slider-container {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    /*slider track */
+    input[type='range'] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 60%; 
+        height: 8px; 
+        background: #ddd; 
+        opacity: 0.7; 
+        transition: opacity 0.2s;
+    }
+
+    /* hover effect for the track */
+    input[type='range']:hover {
+        opacity: 1; 
+    }
+
+    /* draggable */
+    input[type='range']::-webkit-slider-thumb {
+        -webkit-appearance: none; 
+        appearance: none;
+        width: 20px; 
+        height: 20px; 
+        background: #8c2dcc; 
+        cursor: pointer; 
+        border-radius: 50%; 
+    }
+
+    input[type='range']::-moz-range-thumb {
+        width: 20px; 
+        height: 20px; 
+        background: #8c2dcc; 
+        cursor: pointer; 
+        border-radius: 50%; 
+    }
+
+    /* checkbox form */
+    form {
+        text-align: center; 
+        margin-bottom: 20px; 
+    }
+
+    .checkbox input[type="checkbox"] {
+        display: none;
+    }
+
+    /* checkbox labels */
+    .checkbox label {
+        position: relative;
+        padding-left: 28px; 
+        cursor: pointer;
+        display: inline-block;
+        line-height: 23px; 
+    }
+
+    .checkbox label {
+        font-size: 23px; 
+        color: #333; 
+        cursor: pointer;
+        font-family: georgia, sans-serif; 
+        user-select: none; 
+    }
+
+    .checkbox {
+        margin-bottom: 10px; 
+    }
+
+    /* checkbox boxes */
+    .checkbox label::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20px; 
+        height: 20px;
+        border: 2px solid #9B9B9B; 
+        border-radius: 4px; 
+        background-color: white; 
+    }
+
+    /* checkmarks */
+    .checkbox input[type="checkbox"]:checked + label::after {
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 3px;
+        width: 5px;
+        height: 15px;
+        border: solid #8c2dcc;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+</style>
