@@ -3,42 +3,162 @@
     import HeatMap from './HeatMap.svelte';
     import * as d3 from 'd3';
     let data = [];
+    let data_to_display = [];
     let data_win_100 = [];
     let data_win_200 = [];
     let data_lost_100 = [];
     let data_lost_200 = [];
     let allData = []; // Temporary storage for the full dataset
+    let filters = {
+        "tier": false,
+        "team_id": false,
+        "win": false,
+    };
     let currentFrame = 0; 
+    let filter_categories = {};
 
     onMount(async () => {
         allData = await d3.csv("https://raw.githubusercontent.com/Sean1572/league_data/main/2_09_2024_league_crawl_data_annon.csv");
         console.log("hello")
+        
+        Object.entries(filters).forEach(entry => {
+            const [column, enabaled] = entry;
+                //https://d3-graph-gallery.com/graph/basic_datamanipulation.html
+                //Make a heap for the columns, g;et the keys in an array for the unique values:
+                let categories = {};
+                d3.map(allData, function(d){categories[d[column]] = 1});
+                console.log(Object.keys(categories));
+                
+                //for each unqiue category create a filter for it
+                filter_categories[column] = Object.keys(categories);
+        });
         updateData(currentFrame);
     });
 
-    //team_id == 100, 200 ,win == True/Fa;lse
+
+    // The next 2 functions get pairwise categories
+    //select potential filters
+    function combinations(combinations) {
+        let end_goal = 1
+        Object.values(combinations).forEach(list => {
+            end_goal *= list.length
+        });
+        let num_categories = Object.keys(combinations).length
+        //https://stackoverflow.com/questions/1295584/most-efficient-way-to-create-a-zero-filled-javascript-array
+        let index = new Array(num_categories).fill(0);
+        let combinations_result = []
+        return combinations_recursive(combinations_result, combinations, index, end_goal)
+    }
+
+    function combinations_recursive(combinations_result, combinations, index, end_goal) {
+        let mini_result = []
+        for (let i = 0; i<index.length; i++) {
+            //get the ith column, with the unique category index[i]
+            mini_result.push(combinations[Object.keys(combinations)[i]][index[i]]);
+        }
+        
+        //console.log(index, mini_result)
+        //increment index
+        for (let i = index.length-1; i>= 0; i--) {
+            index[i]++
+            if (combinations[Object.keys(combinations)[i]].length <= index[i]) {
+                index[i] = 0
+            } else {
+                break;
+            }
+        }
+        
+
+        combinations_result.push(mini_result);
+        if (combinations_result.length < end_goal) {
+            return combinations_recursive(combinations_result, combinations, index, end_goal);
+        } else {
+            return combinations_result;
+        }
+    }
+
     // Filter data
     function updateData(frame) {
-        data = allData.filter(d => +d.frame === frame);
-        data_win_100 = data.filter(d => d.win === "True" && d.team_id =="100");
-        data_win_200 = data.filter(d => d.win === "True" && d.team_id =="200");
-        data_lost_100 = data.filter(d => d.win === "False" && d.team_id =="100");
-        data_lost_200 = data.filter(d => d.win === "False" && d.team_id =="200");
         
+
+        data = allData.filter(d => +d.frame === frame);
+
+        data_to_display = [];
+
+        //Get all pairwise categories we want to filter by only if user enables them
+        console.log("start combatorics")
+        let only_enabled_filters = {}
+        Object.entries(filters).forEach(entry => {
+            const [column, enabled] = entry;
+            if (enabled) {
+                only_enabled_filters[column] = filter_categories[column]
+            }
+        });
+        //console.log("combinatorics", only_enabled_filters, filter_categories)
+        let filters_selected = combinations(only_enabled_filters)
+        
+        console.log("end combatorics")
+
+
+        //create the data splits to display
+        if (filters_selected[0].length == 0) {
+            data_to_display.push(data)
+        } else {
+            for (const a_filter_seleced of filters_selected) {
+                console.log("make data")
+                data_to_display.push(data.filter(d => {
+                    let filter_data = true;
+                    for (let i = 0; i < a_filter_seleced.length; i++) {
+                        let column = Object.keys(only_enabled_filters)[i]
+                        filter_data = filter_data && (d[column] === a_filter_seleced[i])
+                    }
+                    return filter_data  
+                }))
+                console.log("end data")
+            }
+        }
+
+        // data_win_100 = data.filter(d => d.win === "True" && d.team_id =="100");
+        
+
+        // //filter the data down
+        // data_win_100 = data.filter(d => d.win === "True" && d.team_id =="100");
+        // data_win_200 = data.filter(d => d.win === "True" && d.team_id =="200");
+        // data_lost_100 = data.filter(d => d.win === "False" && d.team_id =="100");
+        // data_lost_200 = data.filter(d => d.win === "False" && d.team_id =="200");
+        
+    }
+
+    function myFunction(event) {
+        let option = event.originalTarget
+        filters[option.id] = option.checked
+        console.log("testing", filters, event)
     }
     
 
     // update the data
+    $: filters, updateData(currentFrame);
     $: currentFrame, updateData(currentFrame);
-    $: data_lost_200, console.log("update dataset", data_lost_200)
+    
 </script>
 
 <main>
     <h1>Dynamic Heatmap Visualization</h1>
     <input type="range" min="1" max="60" bind:value={currentFrame} />
     <p>Current Frame: {currentFrame}</p>
-    <HeatMap bind:data={data_win_100} />
-    <HeatMap bind:data={data_win_200} />
-    <HeatMap bind:data={data_lost_100} />
-    <HeatMap bind:data={data_lost_200} />
+
+    <form >
+        <input type="checkbox" id="tier" name="tier" value="tier" on:change={(event) => myFunction(event)}>
+        <label for="tier"> tier</label><br>
+        <input type="checkbox" id="team_id" name="team_id" value="team_id" on:change={(event) => myFunction(event)}>
+        <label for="team_id"> team</label><br>
+        <input type="checkbox" id="win" name="win" value="win" on:change={(event) => myFunction(event)}>
+        <label for="win"> win</label><br>
+        
+    </form>
+    
+
+    {#each data_to_display as data}
+        <HeatMap bind:data={data} />
+    {/each}
 </main>
