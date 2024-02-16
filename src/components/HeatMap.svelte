@@ -3,7 +3,6 @@
 	import * as d3 from 'd3';
     
     export let data = [];
-    export let text = "testing";
     const width = 650;
     const height = width;
     const marginTop = 40;
@@ -20,7 +19,6 @@
     //going largely based on https://d3-graph-gallery.com/graph/density2d_shading.html
     // and https://github.com/dsc-courses/dsc106-wi24/blob/main/d3-lecture/src/components/Temperature03Axes.svelte
     $: data, console.log("heatmap update", data);
-    $: text, console.log("text update", text);
 
     $: x = d3.scaleLinear()
         .domain([0, mapSize])
@@ -62,7 +60,6 @@
 </script>
 
 <div class="visualization">
-    <p>{text}</p>
     <svg 
     {width}
     {height}

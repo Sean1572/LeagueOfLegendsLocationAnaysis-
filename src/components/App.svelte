@@ -177,10 +177,11 @@
     
     <div class='heatmap-container'>
         {#each data_to_display as details}
+            <p>{details["label"]}</p>
             {#if displayMode === 'heatmap'}
-            <HeatMap bind:data={details["data"]} bind:text={details["label"]}/>
+            <HeatMap bind:data={details["data"]}/>
             {:else}
-                <Hexbin bind:data={details["data"]}  bind:text={details["label"]} />
+                <Hexbin bind:data={details["data"]}/>
             {/if}
         {/each}
     </div>
