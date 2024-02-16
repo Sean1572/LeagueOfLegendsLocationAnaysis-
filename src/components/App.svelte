@@ -16,6 +16,7 @@
     };
     let currentFrame = 0; 
     let filter_categories = {};
+    let label = {}
 
     onMount(async () => {
         allData = await d3.csv("https://raw.githubusercontent.com/Sean1572/league_data/main/2_09_2024_league_crawl_data_annon.csv");
@@ -102,18 +103,26 @@
 
         //create the data splits to display
         if (filters_selected[0].length == 0) {
-            data_to_display.push(data)
+            data_to_display.push({
+                    "data": data,
+                    "label": "All Data"
+                })
         } else {
             for (const a_filter_seleced of filters_selected) {
-                console.log("make data")
-                data_to_display.push(data.filter(d => {
+                console.log("make data", filters_selected)
+                let mini_data = data.filter(d => {
                     let filter_data = true;
                     for (let i = 0; i < a_filter_seleced.length; i++) {
                         let column = Object.keys(only_enabled_filters)[i]
                         filter_data = filter_data && (d[column] === a_filter_seleced[i])
                     }
-                    return filter_data  
-                }))
+                    return filter_data
+                })
+
+                data_to_display.push({
+                    "data": mini_data,
+                    "label": a_filter_seleced.join(" ")
+                })
                 console.log("end data")
             }
         }
@@ -165,8 +174,8 @@
     </form>
     
     <div class='heatmap-container'>
-        {#each data_to_display as data}
-            <HeatMap bind:data={data} />
+        {#each data_to_display as details}
+            <HeatMap bind:data={details["data"]} bind:text={details["label"]}/>
         {/each}
     </div>
 </main>
