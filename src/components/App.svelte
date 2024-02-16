@@ -11,7 +11,7 @@
     let data_lost_200 = [];
     let allData = []; // Temporary storage for the full dataset
     let filters = {
-        "tier": false,
+        
         "team_id": false,
         "win": false,
     };
@@ -161,10 +161,7 @@
     <p>Current Frame: {currentFrame}</p>
 
     <form >
-        <div class="checkbox">
-            <input type="checkbox" id="tier" name="tier" value="tier" on:change={(event) => myFunction(event)}>
-            <label for="tier"> Tier</label><br>
-        </div>
+        
         <div class="checkbox">
             <input type="checkbox" id="team_id" name="team_id" value="team_id" on:change={(event) => myFunction(event)}>
             <label for="team_id"> Team</label><br>
