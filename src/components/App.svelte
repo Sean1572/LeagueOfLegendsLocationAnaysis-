@@ -1,6 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import HeatMap from './HeatMap.svelte';
+    import Hexbin from './Hexbin.svelte';
     import * as d3 from 'd3';
     let data = [];
     let data_to_display = [];
@@ -17,6 +18,7 @@
     let currentFrame = 0; 
     let filter_categories = {};
     let label = {}
+    let displayMode = 'heatmap';
 
     onMount(async () => {
         allData = await d3.csv("https://raw.githubusercontent.com/Sean1572/league_data/main/2_09_2024_league_crawl_data_annon.csv");
@@ -154,7 +156,7 @@
 <main>
     <h1>Dynamic Heatmap Visualization</h1>
     <div class="slider-container">
-        <input type="range" min="1" max="60" bind:value={currentFrame}>
+        <input type="range" min="0" max="60" bind:value={currentFrame}>
     </div>
     <p>Current Frame: {currentFrame}</p>
 
@@ -175,8 +177,17 @@
     
     <div class='heatmap-container'>
         {#each data_to_display as details}
+            {#if displayMode === 'heatmap'}
             <HeatMap bind:data={details["data"]} bind:text={details["label"]}/>
+            {:else}
+                <Hexbin bind:data={details["data"]}  bind:text={details["label"]} />
+            {/if}
         {/each}
+    </div>
+
+    <div class='heathex_buttons'>
+        <button on:click={() => displayMode = 'heatmap'}>Show Heatmap</button>
+        <button on:click={() => displayMode = 'hexbin'}>Show Hexbin</button>
     </div>
 </main>
 
@@ -219,7 +230,7 @@
     input[type='range'] {
         -webkit-appearance: none;
         appearance: none;
-        width: 60%; 
+        width: 40%; 
         height: 8px; 
         background: #ddd; 
         opacity: 0.7; 
@@ -305,5 +316,9 @@
         border: solid #8c2dcc;
         border-width: 0 2px 2px 0;
         transform: rotate(45deg);
+    }
+
+    .heathex_buttons{
+        align-items: center;
     }
 </style>
