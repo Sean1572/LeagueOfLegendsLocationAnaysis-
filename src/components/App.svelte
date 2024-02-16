@@ -3,6 +3,9 @@
     import HeatMap from './HeatMap.svelte';
     import Hexbin from './Hexbin.svelte';
     import * as d3 from 'd3';
+
+    let loaded = false
+    let transition_div_class = "start_"
     let data = [];
     let data_to_display = [];
     let data_win_100 = [];
@@ -20,6 +23,19 @@
     let label = {}
     let displayMode = 'heatmap';
 
+    //DEBUG
+    // function sleep(milliseconds) {
+    //     const date = Date.now();
+    //     let currentDate = null;
+    //     do {
+    //         currentDate = Date.now();
+    //     } while (currentDate - date < milliseconds);
+    // }
+    //DEBUG
+
+
+
+
     onMount(async () => {
         allData = await d3.csv("https://raw.githubusercontent.com/Sean1572/league_data/main/2_09_2024_league_crawl_data_annon.csv");
         console.log("hello")
@@ -35,7 +51,10 @@
                 //for each unqiue category create a filter for it
                 filter_categories[column] = Object.keys(categories);
         });
+        //sleep(3000);
         updateData(currentFrame);
+        loaded=true;
+        transition_div_class="loaded_";
     });
 
 
@@ -154,42 +173,87 @@
 </script>
 
 <main>
-    <h1>Dynamic Heatmap Visualization</h1>
-    <div class="slider-container">
-        <input type="range" min="0" max="60" bind:value={currentFrame}>
+    <div class={transition_div_class + !loaded}> 
+        <h1>Please wait while the visualization loads in, thank you!</h1>
     </div>
-    <p>Current Frame: {currentFrame}</p>
+    <div class={transition_div_class + loaded}> 
+        <h1>Dynamic Heatmap Visualization</h1>
+        <div class="slider-container">
+            <input type="range" min="0" max="60" bind:value={currentFrame}>
+        </div>
+        <p>Current Frame: {currentFrame}</p>
 
-    <form >
+        <form >
+            
+            <div class="checkbox">
+                <input type="checkbox" id="team_id" name="team_id" value="team_id" on:change={(event) => myFunction(event)}>
+                <label for="team_id"> Team</label><br>
+            </div>
+            <div class="checkbox">
+                <input type="checkbox" id="win" name="win" value="win" on:change={(event) => myFunction(event)}>
+                <label for="win"> Win</label><br>
+            </div>
+        </form>
         
-        <div class="checkbox">
-            <input type="checkbox" id="team_id" name="team_id" value="team_id" on:change={(event) => myFunction(event)}>
-            <label for="team_id"> Team</label><br>
+        <div class='heatmap-container'>
+            {#each data_to_display as details}
+                <p>{details["label"]}</p>
+                {#if displayMode === 'heatmap'}
+                <HeatMap bind:data={details["data"]}/>
+                {:else}
+                    <Hexbin bind:data={details["data"]}/>
+                {/if}
+            {/each}
         </div>
-        <div class="checkbox">
-            <input type="checkbox" id="win" name="win" value="win" on:change={(event) => myFunction(event)}>
-            <label for="win"> Win</label><br>
-        </div>
-    </form>
-    
-    <div class='heatmap-container'>
-        {#each data_to_display as details}
-            <p>{details["label"]}</p>
-            {#if displayMode === 'heatmap'}
-            <HeatMap bind:data={details["data"]}/>
-            {:else}
-                <Hexbin bind:data={details["data"]}/>
-            {/if}
-        {/each}
-    </div>
 
-    <div class='heathex_buttons'>
-        <button on:click={() => displayMode = 'heatmap'}>Show Heatmap</button>
-        <button on:click={() => displayMode = 'hexbin'}>Show Hexbin</button>
+        <div class='heathex_buttons'>
+            <button on:click={() => displayMode = 'heatmap'}>Show Heatmap</button>
+            <button on:click={() => displayMode = 'hexbin'}>Show Hexbin</button>
+        </div>
     </div>
 </main>
 
 <style>
+    /* Handling Loading Screen*/
+
+    /* THE DIVS CONTAINING DATA */
+    .start_false {
+        opacity: 0;
+        position: relative;
+    }
+    
+    .loaded_true {
+        position: relative;
+        opacity: 1;
+        transition:
+            opacity 2s 2s;
+    }
+
+    /* THE DIVS CONTAINING PLEASE WAIT MESSAGE */
+    .loaded_false {
+        width: -moz-available;
+        height: -moz-available;
+        text-align: center; 
+        position: absolute;
+        z-index: 1;
+        opacity: 0;
+        transition:
+            opacity 2s;
+    }
+
+    .start_true {
+        
+        width: -moz-available;
+        text-anchor: "middle";
+        text-align: center;
+        position: absolute;
+        z-index: 1;
+        opacity: 1;
+    }
+
+    
+
+
     /* title */
     main h1 {
       font-size: 2.5em; 
