@@ -24,13 +24,13 @@
     let displayMode = 'heatmap';
 
     //DEBUG
-    // function sleep(milliseconds) {
-    //     const date = Date.now();
-    //     let currentDate = null;
-    //     do {
-    //         currentDate = Date.now();
-    //     } while (currentDate - date < milliseconds);
-    // }
+    function sleep(milliseconds) {
+        const date = Date.now();
+        let currentDate = null;
+        do {
+            currentDate = Date.now();
+        } while (currentDate - date < milliseconds);
+    }
     //DEBUG
 
 
@@ -51,7 +51,7 @@
                 //for each unqiue category create a filter for it
                 filter_categories[column] = Object.keys(categories);
         });
-        //sleep(3000);
+        sleep(1000);
         updateData(currentFrame);
         loaded=true;
         transition_div_class="loaded_";
