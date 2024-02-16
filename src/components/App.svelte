@@ -235,7 +235,6 @@
         height: -moz-available;
         text-align: center; 
         position: absolute;
-        z-index: 1;
         opacity: 0;
         transition:
             opacity 2s;
@@ -247,7 +246,6 @@
         text-anchor: "middle";
         text-align: center;
         position: absolute;
-        z-index: 1;
         opacity: 1;
     }
 
