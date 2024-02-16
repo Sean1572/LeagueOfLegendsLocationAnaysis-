@@ -82,10 +82,6 @@
                 />
             {/each}
         </g>
-        <!-- x-axis -->
-        <g bind:this={gx} transform="translate(0,{height - marginBottom})" />
-        <!-- y-axis -->
-        <g bind:this={gy} transform="translate({marginLeft},0)">
         <!-- map -->
         
     </svg>
