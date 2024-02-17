@@ -22,6 +22,7 @@
     let filter_categories = {};
     let label = {}
     let displayMode = 'heatmap';
+    let isHeatmap = true;
 
     //DEBUG
     function sleep(milliseconds) {
@@ -169,6 +170,7 @@
     // update the data
     $: filters, updateData(currentFrame);
     $: currentFrame, updateData(currentFrame);
+    $: displayMode = isHeatmap ? 'heatmap' : 'hexbin';
     
 </script>
 
@@ -176,6 +178,7 @@
     <div class={transition_div_class + !loaded}> 
         <h1>Please wait while the visualization loads in, thank you!</h1>
     </div>
+
     <div class={transition_div_class + loaded}> 
         <h1>Dynamic Heatmap Visualization</h1>
         <div class="slider-container">
@@ -194,21 +197,25 @@
                 <label for="win"> Win</label><br>
             </div>
         </form>
+
+        <div class='heathex_toggle'>
+            <label class="switch">
+                <input type="checkbox" bind:checked={isHeatmap}>
+                <span class="slider round"></span>
+                <span class="heatlabel">Heatmap</span>
+                <span class="hexlabel">Hexbin</span>
+            </label>
+        </div>
         
         <div class='heatmap-container'>
             {#each data_to_display as details}
                 <p>{details["label"]}</p>
                 {#if displayMode === 'heatmap'}
-                <HeatMap bind:data={details["data"]}/>
+                    <HeatMap bind:data={details["data"]}/>
                 {:else}
                     <Hexbin bind:data={details["data"]}/>
                 {/if}
             {/each}
-        </div>
-
-        <div class='heathex_buttons'>
-            <button on:click={() => displayMode = 'heatmap'}>Show Heatmap</button>
-            <button on:click={() => displayMode = 'hexbin'}>Show Hexbin</button>
         </div>
     </div>
 </main>
@@ -280,7 +287,7 @@
         flex-direction: column; 
     }
 
-    /* slider*/
+    /* slider */
     .slider-container {
         text-align: center;
         margin: 20px 0;
@@ -378,7 +385,90 @@
         transform: rotate(45deg);
     }
 
-    .heathex_buttons{
-        align-items: center;
+    /* heathex toggle slider */
+    .heathex_toggle{
+        color: white; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer;
+        font-size: 16px; 
+        transition: background-color 0.3s, transform 0.3s;
+        display: flex;
+        justify-content: center; 
+        flex-wrap: wrap; 
+        gap: 20px;
+    }
+
+    /* heathex switch */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+
+    /* right heatlabel */
+    .heatlabel{
+        position: absolute;
+        color: #686868;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 75px;
+        font-size: 24px;
+    }
+
+    /* left hexlabel */
+    .hexlabel {
+        position: absolute;
+        color: #ff4b4b;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 75px; 
+        font-size: 24px;
+    }
+
+    /* heathex slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ff0000; 
+        transition: .4s;
+        border-radius: 34px; 
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap; 
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px; 
+        left: 4px;
+        bottom: 4px;
+        background-color: white; 
+        transition: .4s;
+        border-radius: 50%;
+    }
+
+    /* color when the switch flipped */
+    input:checked + .slider {
+        background-color: #8c2dcc; 
+    }
+
+    /* Move knob when flipped */
+        input:checked + .slider:before {
+        transform: translateX(26px);
     }
 </style>
