@@ -180,7 +180,7 @@
     </div>
 
     <div class={transition_div_class + loaded}> 
-        <h1>Dynamic Heatmap Visualization</h1>
+        <h1>Player Movement In League Of Legends Summoner's Rift</h1>
         <div class="slider-container">
             <input type="range" min="0" max="60" bind:value={currentFrame}>
         </div>
@@ -209,12 +209,14 @@
         
         <div class='heatmap-container'>
             {#each data_to_display as details}
-                <p>{details["label"]}</p>
-                {#if displayMode === 'heatmap'}
-                    <HeatMap bind:data={details["data"]}/>
-                {:else}
-                    <Hexbin bind:data={details["data"]}/>
-                {/if}
+                <div class='heatmap-container-item'>
+                    <p class='label'>{details["label"]}</p>
+                    {#if displayMode === 'heatmap'}
+                        <HeatMap bind:data={details["data"]}/>
+                    {:else}
+                        <Hexbin bind:data={details["data"]}/>
+                    {/if}
+                </div>
             {/each}
         </div>
     </div>
@@ -271,6 +273,17 @@
       margin-bottom: 20px; 
     }
   
+
+    /* label of the graph filter * /
+    /* https://stackoverflow.com/questions/7720730/how-to-align-absolutely-positioned-element-to-center */
+    /* used above but adapted for flex box */
+    .label {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        padding-left: 8%;
+    }
   
     /* current frame */
     p {
@@ -279,13 +292,15 @@
       font-family: 'Arial', Gadget, sans-serif; 
     }
 
-    /* heatmap */
+    /* heatmaps */
     .heatmap-container {
+        width: 100%;
         display: flex;
         justify-content: center; 
         align-items: center; 
-        flex-direction: column; 
+        flex-direction: row; 
     }
+    
 
     /* slider */
     .slider-container {
@@ -331,7 +346,8 @@
     /* checkbox form */
     form {
         text-align: center; 
-        margin-bottom: 20px; 
+        margin-bottom: 20px;
+        display: block ruby; 
     }
 
     .checkbox input[type="checkbox"] {
@@ -357,6 +373,8 @@
 
     .checkbox {
         margin-bottom: 10px; 
+        margin-left: 1%;
+        margin-right: 1%;
     }
 
     /* checkbox boxes */
