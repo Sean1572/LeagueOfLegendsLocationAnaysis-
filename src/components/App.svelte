@@ -219,6 +219,17 @@
                 </div>
             {/each}
         </div>
+        <p style="color: #ffffff;">
+            Hello! This visualization uses data from league games from across rank and causal play to see player movement over time. 
+            To move through time: use the slider
+            If you want to filter the data by if that team won, and the side the players are on, use the checkboxes above.
+
+            
+            Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1J5RdQfsPoy5ICeKG5RTZqPyxcE6aeAQPJTv0Q-zu9yU/edit?usp=sharing">this google docs</a>
+        </p>
+        <p style="color: #ffffff;">
+            Map for Summoners Rift as well as background images all belong to Riot Games
+        </p>
     </div>
 </main>
 
@@ -285,11 +296,18 @@
         padding-left: 8%;
     }
   
+    a {
+        color: #ffffff;
+    }
     /* current frame */
     p {
+      
       text-align: center; 
       font-size: 20px; 
       font-family: 'Arial', Gadget, sans-serif; 
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
     }
 
     /* heatmaps */
