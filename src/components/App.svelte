@@ -180,7 +180,7 @@
     </div>
 
     <div class={transition_div_class + loaded}> 
-        <h1>Player Movement In League Of Legends Summoner's Rift</h1>
+        <h1>League of Legends: Player Movement Patterns on Summoner's Rift</h1>
         <div class="slider-container">
             <input type="range" min="0" max="60" bind:value={currentFrame}>
         </div>
@@ -219,17 +219,19 @@
                 </div>
             {/each}
         </div>
-        <p style="color: #ffffff;">
-            Hello! This visualization uses data from league games from across rank and causal play to see player movement over time. 
-            To move through time: use the slider
-            If you want to filter the data by if that team won, and the side the players are on, use the checkboxes above.
+        <div class='disclaimer_text'>
+            <p>
+                Hello! This visualization uses data from league games from across rank and causal play to see player movement over time. 
+                To move through time: use the slider
+                If you want to filter the data by if that team won, and the side the players are on, use the checkboxes above.
 
-            
-            Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1J5RdQfsPoy5ICeKG5RTZqPyxcE6aeAQPJTv0Q-zu9yU/edit?usp=sharing">this google docs</a>
-        </p>
-        <p style="color: #ffffff;">
-            Map for Summoners Rift as well as background images all belong to Riot Games
-        </p>
+                
+                Writeup for the visualization can be found at <a href="https://docs.google.com/document/d/1J5RdQfsPoy5ICeKG5RTZqPyxcE6aeAQPJTv0Q-zu9yU/edit?usp=sharing">this google docs</a>
+            </p>
+            <p>
+                Map for Summoners Rift as well as background images all belong to Riot Games
+            </p>
+        </div>
     </div>
 </main>
 
@@ -506,5 +508,12 @@
     /* move knob when flipped */
         input:checked + .slider:before {
         transform: translateX(26px);
+    }
+
+    .disclaimer_text{
+        color:#ffffff;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        display: inline-block;
     }
 </style>
