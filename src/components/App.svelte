@@ -387,7 +387,7 @@
         cursor: pointer;
         font-family: georgia, sans-serif; 
         user-select: none; 
-    }
+    } 
 
     .checkbox {
         margin-bottom: 10px; 
