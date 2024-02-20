@@ -304,7 +304,7 @@
       
       text-align: center; 
       font-size: 20px; 
-      font-family: 'Arial', Gadget, sans-serif; 
+      font-family: 'Roboto', Gadget, sans-serif; 
       margin-left: auto;
       margin-right: auto;
       width: 50%;
@@ -503,7 +503,7 @@
         background-color: #8c2dcc; 
     }
 
-    /* Move knob when flipped */
+    /* move knob when flipped */
         input:checked + .slider:before {
         transform: translateX(26px);
     }
