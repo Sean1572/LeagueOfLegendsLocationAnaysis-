@@ -405,7 +405,7 @@
       font-family: 'Roboto', Gadget, sans-serif; 
       margin-left: auto;
       margin-right: auto;
-      width: 80%;
+      
       line-clamp: 2;
     }
 
@@ -464,7 +464,8 @@
     form {
         text-align: center; 
         margin-bottom: 20px;
-        display: block ruby; 
+        display: flex;
+        justify-content: center;
 
     }
 
@@ -620,8 +621,11 @@
 
     .frame_message_div {
         font-family: "roboto", sans-serif;
-        padding-left: 300px;
-        padding-right: 300px;
+        padding-left: 10%;
+        padding-right:  10%;
+        margin-bottom: 20px;
         font-size: 15px;
+        overflow-y: scroll;
+        height: 100px;
     }
 </style>
