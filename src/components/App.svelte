@@ -165,11 +165,79 @@
         filters[option.id] = option.checked
         console.log("testing", filters, event)
     }
+
+    let frame_message = ""
+    function update_message() {
+        if (currentFrame == 0) {
+            frame_message = "Minutes in Game 0 Here we are at the start of the game, all the players are at spawn. Note there are 3 lanes (top, middle, and bottom) with a river. The circles next to the rivers are boss spawns. The goal is to break the opposing side's nexus"
+        } else if (currentFrame == 1) {
+            frame_message = "Minutes in Game: 1 players moving into to top and middle lane, players who are going to the bottom lane is helping the player in the jungle at the buffs in the jungle"
+        }
+        else if (currentFrame == 2) {
+            frame_message = "Minutes in Game: 2 bottom lane players have left jungle, jungle moving to second camps"
+        }
+        else if (currentFrame == 3) {
+            frame_message = "Minutes in Game: 3 we starting see more variance in player movement, jungle moving to next camp, people spread out in lane, handful of players at spawn who had an early loss"
+        }
+        else if (currentFrame == 4) {
+            frame_message = "Minutes in Game: 3 we starting see more variance in player movement, jungle moving to next camp, people spread out in lane, handful of players at spawn who had an early loss"
+        }
+        else if (currentFrame == 5) {
+            frame_message = "Minutes in Game: 5 we see frist 'ganks' where the player in jungle uses the river to help the laning players"
+        }
+        else if (currentFrame >= 6 && currentFrame < 9) {
+            frame_message = "Minutes in Game: " + currentFrame + " Watch the river! Some of the frist bosses (dragon and barron) have spawned so more players are there"
+        }
+        else if (currentFrame >= 9 && currentFrame < 10) {
+            frame_message = "Minutes in Game: " + currentFrame + " We start seeeing much more variance in games, we typically see much more activity in bottom lane"
+        }
+        else if (currentFrame >= 13 && currentFrame < 17) {
+            frame_message = "Minutes in Game: " + currentFrame + " we start seeing more activity further up and down the lanes as towers start to fall allowing players to push forward"
+        }
+        else if (currentFrame >= 18 && currentFrame < 20) {
+            frame_message = "Minutes in Game: " + currentFrame + " at this point the lane phase is mostly done, watch as bottom and top lane becomes a much less popular place"
+        }
+        else if (currentFrame >= 20 && currentFrame < 22) {
+            frame_message = "Minutes in Game: " + currentFrame + " mid lane becomes a key target, people are roaming jungle much more chaotically now as people focWe recommend turning on some of the filters, around now you can see how the winning and lossing us on midlane and the river"
+        }
+        else if (currentFrame >= 22 && currentFrame < 25) {
+            frame_message = "Minutes in Game: " + currentFrame + " if you haven't already, start turning on those filters, around now you can start seeing how much map control the diffrent sides and winning teams have"
+        }
+        else if (currentFrame >= 25 && currentFrame < 30) {
+            frame_message = "Minutes in Game: " + currentFrame + " Players are spread out more, at this late stage of the game, players start adapting more to indivual games, and follow much less set patterns"
+        }
+        else if (currentFrame >= 30 && currentFrame < 40) {
+            frame_message = "Minutes in Game: " + currentFrame + " Most games are ending around now, players are now spending more time at nexuses of the losing team"
+        }
+        else if (currentFrame >= 40 && currentFrame < 60) {
+            frame_message = "Minutes in Game: " + currentFrame + " as games start to end, we have fewer and fewer datapoints for these really long games, so the data becomes more scare over time"
+        }
+        else if (currentFrame == 60) {
+            frame_message = "Minutes in Game: " + currentFrame + " The longest game last for about 60 minutes, you can see just 10 players at this point since there is only 1 game in our data now. Looks like red side is struggling"
+        }
+        // currentframe 5 we see frist "ganks" where jungle uses the river to help the lanes
+        // currentframe 6,7,8 the frist bosses spawn in river "barron" and "dragon" close to top and bottom lane,
+        // current frame 9,10, 11, 12 We start seeeing much more variance in games, we typically see much more activity in bottom lane
+        // current frame 13 - 17 we start seeing more activity further up and down the lanes as towers start to fall allowing players to push forward
+        // current frame 18 - 20 at this point the lane phase is mostly done, watch as bottom and top lane becomes a much less popular place
+        // current frame 20 - mid lane becomes a key target, people are roaming jungle much more chaotically now as people focWe recommend turning on some of the filters, around now you can see how the winning and lossing us on midlane and the river
+        // current frame 22 - sides have much more map control
+        // current frame 25 - Players are spread out more, you will notice that also the data becomes less as time goes on, an adverage match will end soon
+        // current frame 30 - at this point players are just going back and forth just trying to push close enough to the opposing nexus for victory, winning teams spend a lot of time on the opposite side
+        // current frame 40 - Most games do not last this long, many of the data points you will see now represent indivual players, at this stage, games no long follow a set script
+        // current frame 60 - The longest game last for about 60 minutes, you can see just 10 players at this point since there is only 1 game in our data now 
+
+
+
+        else {
+            frame_message = "Current Frame: " + currentFrame;
+        }
+    }
     
 
     // update the data
     $: filters, updateData(currentFrame);
-    $: currentFrame, updateData(currentFrame);
+    $: currentFrame, updateData(currentFrame), update_message();
     $: displayMode = isHeatmap ? 'heatmap' : 'hexbin';
     
 </script>
@@ -184,7 +252,7 @@
         <div class="slider-container">
             <input type="range" min="0" max="60" bind:value={currentFrame}>
         </div>
-        <p>Current Frame: {currentFrame}</p>
+        <p>{frame_message}</p>
 
         <form >
             
@@ -253,8 +321,8 @@
 
     /* THE DIVS CONTAINING PLEASE WAIT MESSAGE */
     .loaded_false {
-        width: -moz-available;
-        height: -moz-available;
+        margin-left: auto;
+        margin-right: auto;
         text-align: center; 
         position: absolute;
         opacity: 0;
@@ -264,7 +332,8 @@
 
     .start_true {
         
-        width: -moz-available;
+        margin-left: auto;
+        margin-right: auto;
         text-anchor: "middle";
         text-align: center;
         position: absolute;
@@ -368,6 +437,7 @@
         text-align: center; 
         margin-bottom: 20px;
         display: block ruby; 
+
     }
 
     .checkbox input[type="checkbox"] {
