@@ -380,14 +380,14 @@
         padding-left: 28px; 
         cursor: pointer;
         display: inline-block;
-        line-height: 23px; 
+        line-height: 22px; 
     }
 
     .checkbox label {
-        font-size: 23px; 
+        font-size: 25px; 
         color: #333; 
         cursor: pointer;
-        font-family: georgia, sans-serif; 
+        font-family: "roboto", sans-serif; 
         user-select: none; 
     } 
 
@@ -402,7 +402,7 @@
         content: '';
         position: absolute;
         left: 0;
-        top: 0;
+        bottom: 0;
         width: 20px; 
         height: 20px;
         border: 2px solid #9B9B9B; 
@@ -460,6 +460,7 @@
         transform: translateY(-50%);
         left: 75px;
         font-size: 24px;
+        font-family: "roboto", sans-serif; 
     }
 
     /* left hexlabel */
@@ -470,6 +471,7 @@
         transform: translateY(-50%);
         right: 75px; 
         font-size: 24px;
+        font-family: "roboto", sans-serif; 
     }
 
     /* heathex slider */
@@ -515,5 +517,6 @@
         background-color: rgba(0, 0, 0, 0.5);
         padding: 10px;
         display: inline-block;
+        font-family: "roboto", sans-serif; 
     }
 </style>
