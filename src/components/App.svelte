@@ -168,54 +168,75 @@
         console.log("testing", filters, event)
     }
 
+    let frame_num = ""
     let frame_message = ""
     function update_message() {
         if (currentFrame == 0) {
-            frame_message = "Minutes in Game 0 Here we are at the start of the game, all the players are at spawn. Note there are 3 lanes (top, middle, and bottom) with a river. The circles next to the rivers are boss spawns. The goal is to break the opposing side's nexus"
+            frame_num = "Minutes in Game: 0"
+            frame_message = "Here we are at the start of the game, all the players are at spawn. Note there are 3 lanes (top, middle, and bottom) with two rivers. The circles next to the rivers are boss spawns. The goal is to break the opposing side's nexus."
         } else if (currentFrame == 1) {
-            frame_message = "Minutes in Game: 1 players moving into to top and middle lane, players who are going to the bottom lane is helping the player in the jungle at the buffs in the jungle"
+            frame_num = "Minutes in Game: 1"
+            frame_message = "Players are moving into the top and middle lanes. Players who are going to the bottom lane are helping the player in the jungle at their buffs."
         }
         else if (currentFrame == 2) {
-            frame_message = "Minutes in Game: 2 bottom lane players have left jungle, jungle moving to second camps"
+            frame_num = "Minutes in Game: 2" 
+            frame_message = "Bottom lane players have left the jungle, junglers moving to second camps."
         }
         else if (currentFrame == 3) {
-            frame_message = "Minutes in Game: 3 we starting see more variance in player movement, jungle moving to next camp, people spread out in lane, handful of players at spawn who had an early loss"
+            frame_num = "Minutes in Game: 3"
+            frame_message = "We are starting to see more variance in player movement: junglers moving to next camp, players spread out in lane, handful of players at spawn who had an early loss."
         }
         else if (currentFrame == 4) {
-            frame_message = "Minutes in Game: 3 we starting see more variance in player movement, jungle moving to next camp, people spread out in lane, handful of players at spawn who had an early loss"
+            frame_num = "Minutes in Game: 4" 
+            frame_message = "We are starting see more variance in player movement, jungle moving to next camp, players spread out in lane, handful of players at spawn who had an early loss."
         }
         else if (currentFrame == 5) {
-            frame_message = "Minutes in Game: 5 we see frist 'ganks' where the player in jungle uses the river to help the laning players"
+            frame_num = "Minutes in Game: 5" 
+            frame_message = "We see the first 'ganks' where the player in jungle uses the river to help the laning players."
         }
         else if (currentFrame >= 6 && currentFrame < 9) {
-            frame_message = "Minutes in Game: " + currentFrame + " Watch the river! Some of the frist bosses (dragon and barron) have spawned so more players are there"
+            frame_num = "Minutes in Game: " + currentFrame
+            frame_message = "Watch the river! Some of the first bosses (dragon and baron nashor) have spawned so more players are there."
         }
         else if (currentFrame >= 9 && currentFrame < 10) {
-            frame_message = "Minutes in Game: " + currentFrame + " We start seeeing much more variance in games, we typically see much more activity in bottom lane"
+            frame_num = "Minutes in Game: " + currentFrame
+            frame_message = "We start seeing much more variance in games, we typically see much more activity in bottom lane."
+        }
+        else if (currentFrame >= 10 && currentFrame < 13) {
+            frame_num = "Minutes in Game: " + currentFrame
+            frame_message = "We start seeing much more presence in the top river. Players begin fighting for the big objective on the top side of the map at this stage of the game."
         }
         else if (currentFrame >= 13 && currentFrame < 17) {
-            frame_message = "Minutes in Game: " + currentFrame + " we start seeing more activity further up and down the lanes as towers start to fall allowing players to push forward"
+            frame_num = "Minutes in Game: " + currentFrame
+            frame_message = "We start seeing more activity further up and down the lanes as towers start to fall allowing players to push forward."
         }
-        else if (currentFrame >= 18 && currentFrame < 20) {
-            frame_message = "Minutes in Game: " + currentFrame + " at this point the lane phase is mostly done, watch as bottom and top lane becomes a much less popular place"
+        else if (currentFrame >= 17 && currentFrame < 20) {
+            frame_num = "Minutes in Game: " + currentFrame 
+            frame_message = "At this point the laning phase is mostly done, watch as bottom and top lane become a much less popular place."
         }
         else if (currentFrame >= 20 && currentFrame < 22) {
-            frame_message = "Minutes in Game: " + currentFrame + " mid lane becomes a key target, people are roaming jungle much more chaotically now as people focWe recommend turning on some of the filters, around now you can see how the winning and lossing us on midlane and the river"
+            frame_num = "Minutes in Game: " + currentFrame
+            frame_message = "Mid lane becomes a key target, players are roaming jungle much more chaotically now (We recommend turning on some of the filters, around now you can see how the winning and lossing us on midlane and the river)."
         }
         else if (currentFrame >= 22 && currentFrame < 25) {
-            frame_message = "Minutes in Game: " + currentFrame + " if you haven't already, start turning on those filters, around now you can start seeing how much map control the diffrent sides and winning teams have"
+            frame_num = "Minutes in Game: " + currentFrame
+            frame_message = "If you haven't already, start turning on those filters, around now you can start seeing how much map control the diffrent sides and winning teams have."
         }
         else if (currentFrame >= 25 && currentFrame < 30) {
-            frame_message = "Minutes in Game: " + currentFrame + " Players are spread out more, at this late stage of the game, players start adapting more to indivual games, and follow much less set patterns"
+            frame_num = "Minutes in Game: " + currentFrame
+            frame_message = "Players are spread out more, at this late stage of the game, players start adapting more to individual games, and follow much less set patterns."
         }
         else if (currentFrame >= 30 && currentFrame < 40) {
-            frame_message = "Minutes in Game: " + currentFrame + " Most games are ending around now, players are now spending more time at nexuses of the losing team, mostly people are only using midlane now"
+            frame_num = "Minutes in Game: " + currentFrame
+            frame_message = "Most games are ending around now, players are now spending more time at nexuses of the losing team, players are mostly grouping mid."
         }
         else if (currentFrame >= 40 && currentFrame < 60) {
-            frame_message = "Minutes in Game: " + currentFrame + " as games start to end, we have fewer and fewer datapoints for these really long games, so the data becomes more scare over time"
+            frame_num = "Minutes in Game: " + currentFrame
+            frame_message = "As games start to end, we have fewer and fewer datapoints for these really long games, so the data becomes more scarce over time."
         }
         else if (currentFrame == 60) {
-            frame_message = "Minutes in Game: " + currentFrame + " The longest game last for about 60 minutes, you can see just 10 players at this point since there is only 1 game in our data now. Looks like red side is struggling"
+            frame_num = "Minutes in Game: " + currentFrame 
+            frame_message = "The longest game lasted for about 60 minutes, you can see just 10 players at this point since there is only 1 game in our data now. Looks like red side is losing."
         }
         // currentframe 5 we see frist "ganks" where jungle uses the river to help the lanes
         // currentframe 6,7,8 the frist bosses spawn in river "barron" and "dragon" close to top and bottom lane,
@@ -256,6 +277,7 @@
         </div>
 
         <div class="frame_message_div">
+            <p>{frame_num}</p>
             <p>{frame_message}</p>
         </div>
 
@@ -350,7 +372,7 @@
 
     /* title */
     main h1 {
-      font-size: 2.5em; 
+      font-size: 2.4em; 
       font-weight: bold; 
       color: #8400ff;
       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25); 
@@ -460,7 +482,7 @@
     }
 
     .checkbox label {
-        font-size: 25px; 
+        font-size: 20px; 
         color: #333; 
         cursor: pointer;
         font-family: "roboto", sans-serif; 
@@ -491,7 +513,7 @@
         content: '';
         position: absolute;
         left: 8px;
-        top: 3px;
+        top: 1px;
         width: 5px;
         height: 15px;
         border: solid #8c2dcc;
@@ -597,6 +619,9 @@
     }
 
     .frame_message_div {
-        
+        font-family: "roboto", sans-serif;
+        padding-left: 300px;
+        padding-right: 300px;
+        font-size: 15px;
     }
 </style>
