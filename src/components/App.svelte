@@ -277,8 +277,10 @@
         </div>
 
         <div class="frame_message_div">
-            <p>{frame_num}</p>
-            <p>{frame_message}</p>
+            <p style="margin-block-start: 0;
+            margin-block-end: 0;">{frame_num}</p>
+            <p style="margin-block-start: 0;
+            margin-block-end: 0;">{frame_message}</p>
         </div>
 
         <form >
@@ -331,6 +333,11 @@
 </main>
 
 <style>
+
+    /* above was a key bit of googling for centering the elements */
+    /* https://stackoverflow.com/questions/7720730/how-to-align-absolutely-positioned-element-to-center */
+
+
     /* Handling Loading Screen*/
 
     /* THE DIVS CONTAINING DATA */
@@ -351,6 +358,8 @@
         margin-left: auto;
         margin-right: auto;
         text-align: center; 
+        left: 0;
+        right: 0;
         position: absolute;
         opacity: 0;
         transition:
@@ -358,9 +367,11 @@
     }
 
     .start_true {
-        
+        align-content: center;
         margin-left: auto;
         margin-right: auto;
+        left: 0;
+        right: 0;
         text-anchor: "middle";
         text-align: center;
         position: absolute;
@@ -372,7 +383,7 @@
 
     /* title */
     main h1 {
-      font-size: 2.4em; 
+      font-size: xx-large; 
       font-weight: bold; 
       color: #8400ff;
       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25); 
@@ -384,7 +395,6 @@
   
 
     /* label of the graph filter * /
-    /* https://stackoverflow.com/questions/7720730/how-to-align-absolutely-positioned-element-to-center */
     /* used above but adapted for flex box */
     .label {
         position: absolute;
