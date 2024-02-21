@@ -141,9 +141,11 @@
                     return filter_data
                 })
 
+                
+                
                 data_to_display.push({
                     "data": mini_data,
-                    "label": a_filter_seleced.join(" ")
+                    "label": a_filter_seleced.join(" ").replace("False", "Lost").replace("True", "Won")
                 })
                 console.log("end data")
             }
@@ -207,7 +209,7 @@
             frame_message = "Minutes in Game: " + currentFrame + " Players are spread out more, at this late stage of the game, players start adapting more to indivual games, and follow much less set patterns"
         }
         else if (currentFrame >= 30 && currentFrame < 40) {
-            frame_message = "Minutes in Game: " + currentFrame + " Most games are ending around now, players are now spending more time at nexuses of the losing team"
+            frame_message = "Minutes in Game: " + currentFrame + " Most games are ending around now, players are now spending more time at nexuses of the losing team, mostly people are only using midlane now"
         }
         else if (currentFrame >= 40 && currentFrame < 60) {
             frame_message = "Minutes in Game: " + currentFrame + " as games start to end, we have fewer and fewer datapoints for these really long games, so the data becomes more scare over time"
@@ -378,7 +380,8 @@
       font-family: 'Roboto', Gadget, sans-serif; 
       margin-left: auto;
       margin-right: auto;
-      width: 50%;
+      width: 80%;
+      line-clamp: 2;
     }
 
     /* heatmaps */
