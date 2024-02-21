@@ -254,7 +254,10 @@
         <div class="slider-container">
             <input type="range" min="0" max="60" bind:value={currentFrame}>
         </div>
-        <p>{frame_message}</p>
+
+        <div class="frame_message_div">
+            <p>{frame_message}</p>
+        </div>
 
         <form >
             
@@ -588,5 +591,9 @@
         background-color: rgba(0, 0, 0, 0.5);
         padding: 10px;
         display: inline-block;
+    }
+
+    .frame_message_div {
+        
     }
 </style>
