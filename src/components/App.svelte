@@ -282,7 +282,7 @@
                 <div class='heatmap-container-item'>
                     <p class='label'>{details["label"]}</p>
                     {#if displayMode === 'heatmap'}
-                        <HeatMap bind:data={details["data"]}/>
+                        <HeatMap bind:data={details["data"]} bind:index={currentFrame} bind:side={details["label"]}/>
                     {:else}
                         <Hexbin bind:data={details["data"]}/>
                     {/if}

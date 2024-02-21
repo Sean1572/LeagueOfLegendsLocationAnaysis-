@@ -1,8 +1,11 @@
 
 <script>
+    import Annotations from './Annotations.svelte';
 	import * as d3 from 'd3';
     
     export let data = [];
+    export let index = 0;
+    export let side = "";
     const width = 650;
     const height = width;
     const marginTop = 40;
@@ -54,7 +57,6 @@
             (data)
 
     $: console.log(densityData)
-
     
     
 </script>
@@ -83,6 +85,9 @@
             {/each}
         </g>
         <!-- map -->
-        
+
+
+        <!-- https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text -->
+        <Annotations bind:time={index} bind:side={side}/>
     </svg>
 </div>
